@@ -1,0 +1,37 @@
+@import url('bootstrap/dist/css/bootstrap.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Dark mode styles */
+[data-bs-theme="dark"] body {
+  background-color: #333;
+  color: white;
+}
+[data-bs-theme="dark"] .bg-light {
+  background-color: #444 !important;
+}
+[data-bs-theme="dark"] .bg-white {
+  background-color: #555 !important;
+}
+[data-bs-theme="dark"] .text-primary {
+  color: #4db6ac !important;
+}
+
+/* Custom colors */
+.bg-primary-custom {
+  background-color: #005566; /* Teal for healthcare vibe */
+}
+.text-accent {
+  color: #e0e0e0;
+}
+.btn-primary-custom {
+  background-color: #005566;
+  border-color: #005566;
+}
+.btn-primary-custom:hover {
+  background-color: #003d4a;
+  border-color: #003d4a;
+}
