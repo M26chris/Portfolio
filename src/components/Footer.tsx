@@ -5,7 +5,7 @@ const Footer: React.FC = () => (
     <Container className="text-center">
       <p className="mb-1">&copy; 2025 Musasa Christopher. All rights reserved.</p>
       <p className="mb-0">
-        <a href="https://https://github.com/M26chris" className="text-white text-decoration-underline me-3">GitHub</a> 
+        <a href="https://github.com/M26chris" className="text-white text-decoration-underline me-3">GitHub</a> 
         | 
         <a href="https://www.linkedin.com/in/musasa-christopher-396b60117/" className="text-white text-decoration-underline ms-3">LinkedIn </a>
         |
