@@ -11,7 +11,7 @@ const Contact: React.FC = () => (
       <ul className="list-group list-group-flush mb-4">
         <li className="list-group-item">Data Cleaning: $50/project</li>
         <li className="list-group-item">Lab Consulting: $30/hr</li>
-        <li className="list-group-item">Technical Support: $40/session</li>
+        <li className="list-group-item">Technical Support: $20/session</li>
       </ul>
       <ContactForm />
     </Container>

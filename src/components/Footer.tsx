@@ -7,7 +7,7 @@ const Footer: React.FC = () => (
       <p className="mb-0">
         <a href="https://https://github.com/M26chris" className="text-white text-decoration-underline me-3">GitHub</a> 
         | 
-        <a href="https://www.linkedin.com/in/musasa-christopher-396b60117/" className="text-white text-decoration-underline ms-3">LinkedIn</a>
+        <a href="https://www.linkedin.com/in/musasa-christopher-396b60117/" className="text-white text-decoration-underline ms-3">LinkedIn </a>
         |
         <a href="tel:+256778129221, +256755281260" className="text-white text-decoration-underline ms-3">Phone: +256 778 129 221, +256 755 281 260</a>
       </p>
