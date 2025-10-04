@@ -11,8 +11,8 @@ const Home: React.FC = () => (
     transition={{ duration: 1 }}
     className="min-vh-100 d-flex align-items-center"
   >
-    {/* Hero Section */}
     <div className="w-100">
+      {/* Enhanced Hero Section */}
       <Container className="text-center py-5">
         <motion.h1 
           initial={{ y: -50 }}
@@ -26,29 +26,31 @@ const Home: React.FC = () => (
           initial={{ y: 50 }}
           animate={{ y: 0 }}
           transition={{ delay: 0.4 }}
-          className="lead text-dark mb-4"
+          className="lead text-dark mb-3 fs-4"
         >
-          {personalInfo.title}
+          Medical Lab Technician | Data Analyst | Cybersecurity Specialist
         </motion.p>
         <motion.p 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="text-muted mb-4 mx-auto"
-          style={{ maxWidth: '600px' }}
+          className="text-muted mb-4 mx-auto fs-5"
+          style={{ maxWidth: '700px' }}
         >
-          {personalInfo.bio}
+          Bridging healthcare expertise with data-driven solutions. 99.7% accuracy in diagnostic reporting, 
+          30% efficiency improvements through data optimization, and cybersecurity protocols for sensitive health data.
         </motion.p>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
+          className="mt-4"
         >
           <Button 
             variant="primary-custom" 
             size="lg" 
-            className="me-3"
-            href="#contact"
+            className="me-3 mb-2"
+            href="/contact"
           >
             Contact Me
           </Button>
@@ -57,6 +59,7 @@ const Home: React.FC = () => (
             size="lg"
             href="/cv.pdf"
             target="_blank"
+            className="mb-2"
           >
             Download CV
           </Button>
@@ -69,11 +72,11 @@ const Home: React.FC = () => (
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
-          className="text-center mb-4"
+          className="text-center mb-5 display-5 fw-bold"
         >
           Featured Projects
         </motion.h2>
-        <Row xs={1} md={3} className="g-4">
+        <Row xs={1} md={2} lg={3} className="g-4">
           {projects.slice(0, 3).map((project, index) => (
             <Col key={project.id}>
               <motion.div
@@ -90,9 +93,15 @@ const Home: React.FC = () => (
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.8 }}
-          className="text-center mt-4"
+          className="text-center mt-5"
         >
-          <a href="/projects" className="text-primary-custom text-decoration-underline">See All Projects</a>
+          <Button 
+            variant="primary-custom" 
+            href="/projects"
+            size="lg"
+          >
+            View All Projects
+          </Button>
         </motion.div>
       </Container>
     </div>
