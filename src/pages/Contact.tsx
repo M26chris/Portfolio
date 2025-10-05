@@ -3,7 +3,7 @@ import { Container } from 'react-bootstrap';
 import ContactForm from '../components/ContactForm';
 
 const Contact: React.FC = () => (
-  <motion.section initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }} className="py-4">
+  <motion.section id="contact" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }} className="py-4">
     <Container>
       <h2 className="mb-4">Contact & Services</h2>
       <p className="mb-4">Email: musasachristopher2@gmail.com | Phone: +256755281260</p>

@@ -35,3 +35,76 @@ body {
   background-color: #003d4a;
   border-color: #003d4a;
 }
+/* src/index.css */
+:root {
+  --primary-custom: #20c997; /* Teal color */
+  --primary-dark: #1aa179;
+  --primary-light: #38d9a9;
+}
+
+/* Bootstrap custom variants */
+.btn-primary-custom {
+  background-color: var(--primary-custom) !important;
+  border-color: var(--primary-custom) !important;
+  color: white !important;
+}
+
+.btn-primary-custom:hover {
+  background-color: var(--primary-dark) !important;
+  border-color: var(--primary-dark) !important;
+}
+
+.btn-outline-primary-custom {
+  color: var(--primary-custom) !important;
+  border-color: var(--primary-custom) !important;
+  background-color: transparent !important;
+}
+
+.btn-outline-primary-custom:hover {
+  background-color: var(--primary-custom) !important;
+  color: white !important;
+}
+
+.text-primary-custom {
+  color: var(--primary-custom) !important;
+}
+
+.border-primary-custom {
+  border-color: var(--primary-custom) !important;
+}
+
+.bg-primary-custom {
+  background-color: var(--primary-custom) !important;
+}
+
+/* Progress bar custom color */
+.progress-bar {
+  background-color: var(--primary-custom) !important;
+}
+
+/* Dark theme support */
+[data-bs-theme="dark"] {
+  --bs-body-bg: #1a1a1a;
+  --bs-body-color: #ffffff;
+}
+
+[data-bs-theme="light"] {
+  --bs-body-bg: #ffffff;
+  --bs-body-color: #000000;
+}
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Ensure proper spacing for fixed navbar */
+body {
+  padding-top: 76px;
+}
+
+/* Custom teal color highlights */
+mark {
+  background-color: rgba(32, 201, 151, 0.2) !important;
+  padding: 0.2em 0.4em;
+  border-radius: 0.25em;
+}

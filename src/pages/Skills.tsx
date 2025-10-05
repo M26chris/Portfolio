@@ -10,6 +10,7 @@ const Skills: React.FC = () => {
 
   return (
     <motion.section 
+      id="skills"
       initial={{ opacity: 0 }} 
       animate={{ opacity: 1 }} 
       transition={{ duration: 1 }} 
