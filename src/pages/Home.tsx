@@ -1,12 +1,13 @@
 import { motion } from 'framer-motion';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom'; // ADD THIS IMPORT
+import { useNavigate } from 'react-router-dom'; // Change import
 import ProjectCard from '../components/ProjectCard';
 import { projects } from '../data/projects';
 import { personalInfo } from '../data/personal';
 
 const Home: React.FC = () => {
   const featuredProjects = projects.filter(project => project.featured);
+  const navigate = useNavigate(); // Use navigate hook
 
   return (
     <motion.section 
@@ -53,16 +54,14 @@ const Home: React.FC = () => {
               variant="primary-custom" 
               size="lg" 
               className="me-3"
-              as={Link} // CHANGE THIS
-              to="/contact" // CHANGE THIS
+              onClick={() => navigate('/contact')} // Use onClick instead
             >
               Contact Me
             </Button>
             <Button 
               variant="outline-primary-custom" 
               size="lg"
-              as={Link} // CHANGE THIS
-              to="/resume" // CHANGE THIS
+              onClick={() => navigate('/resume')} // Use onClick instead
             >
               Download CV
             </Button>
@@ -100,8 +99,7 @@ const Home: React.FC = () => {
           >
             <Button 
               variant="primary-custom" 
-              as={Link} // CHANGE THIS
-              to="/projects" // CHANGE THIS
+              onClick={() => navigate('/projects')} // Use onClick instead
               size="lg"
             >
               View All Projects
