@@ -87,42 +87,39 @@ const ContactForm: React.FC = () => {
         return;
       }
 
-      // Submit using a hidden HTML form (Netlify's preferred method)
+      // Create and submit a hidden HTML form (Netlify's preferred method)
       const form = document.createElement('form');
       form.method = 'POST';
       form.action = '/';
       form.style.display = 'none';
       
-      // Add all form fields
-      const fields = {
-        'form-name': 'contact',
-        'name': AdvancedSecurity.sanitizeInput(values.name, 50),
-        'email': AdvancedSecurity.sanitizeInput(values.email, 100),
-        'message': AdvancedSecurity.sanitizeInput(values.message, 1000),
-        '_fingerprint': userFingerprint,
-        '_timestamp': values._timestamp
-      };
-
-      Object.entries(fields).forEach(([name, value]) => {
+      // Add all required fields for Netlify Forms
+      const addField = (name: string, value: string) => {
         const input = document.createElement('input');
         input.type = 'hidden';
         input.name = name;
         input.value = value;
         form.appendChild(input);
-      });
+      };
+
+      addField('form-name', 'contact');
+      addField('name', AdvancedSecurity.sanitizeInput(values.name, 50));
+      addField('email', AdvancedSecurity.sanitizeInput(values.email, 100));
+      addField('message', AdvancedSecurity.sanitizeInput(values.message, 1000));
+      addField('_fingerprint', userFingerprint);
+      addField('_timestamp', values._timestamp);
 
       document.body.appendChild(form);
       form.submit();
-      
-      // Remove the form after submission
-      setTimeout(() => {
-        document.body.removeChild(form);
-      }, 100);
 
-      // Assume success (Netlify will handle the actual submission)
+      // Show success message immediately (the form will redirect)
       setSubmitStatus('success');
       resetForm();
-      (document.querySelector('[name="_timestamp"]') as HTMLInputElement).value = Date.now().toString();
+      
+      // Reset timestamp for next submission
+      setTimeout(() => {
+        (document.querySelector('[name="_timestamp"]') as HTMLInputElement).value = Date.now().toString();
+      }, 1000);
 
     } catch (error) {
       console.error('Form submission error:', error);
@@ -139,6 +136,8 @@ const ContactForm: React.FC = () => {
         <Alert variant="success" className="mb-4">
           <strong>✅ Message Sent!</strong><br />
           Thank you for your message. I'll get back to you within 24 hours.
+          <br />
+          <small>You will be redirected to the success page shortly...</small>
         </Alert>
       )}
       
@@ -156,7 +155,7 @@ const ContactForm: React.FC = () => {
         </Alert>
       )}
 
-      {/* Hidden HTML form for Netlify bots */}
+      {/* Hidden HTML form for Netlify bot detection */}
       <form name="contact" netlify-honeypot="bot-field" hidden>
         <input type="text" name="name" />
         <input type="email" name="email" />

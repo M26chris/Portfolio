@@ -5,6 +5,14 @@
 [build.environment]
   NODE_VERSION = "18"
 
+# Form settings
+[[redirects]]
+  from = "/"
+  to = "/form-success.html"
+  status = 200
+  conditions = {FormName = "contact"}
+
+# Security headers
 [[headers]]
   for = "/*"
   [headers.values]
@@ -23,6 +31,6 @@
       connect-src 'self' https://vitals.vercel-insights.com;
       frame-ancestors 'none';
       base-uri 'self';
-      form-action 'self' https://api.netlify.com;
+      form-action 'self';
       upgrade-insecure-requests;
     """
