@@ -1,7 +1,7 @@
-// Enhanced Header.tsx with backdrop
+// Updated Header.tsx with background color and proper positioning
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useTheme } from '../../context/ThemeContext';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -21,30 +21,22 @@ const Header: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close navbar on route change and prevent body scroll
+  // Close navbar when route changes
   useEffect(() => {
     setExpanded(false);
-    document.body.style.overflow = 'unset';
   }, [location]);
-
-  // Handle body scroll when navbar is open
-  useEffect(() => {
-    if (expanded) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-  }, [expanded]);
 
   const getActiveSection = () => {
     const path = location.pathname;
-    if (path === '/') return 'home';
-    if (path === '/about') return 'about';
-    if (path === '/projects') return 'projects';
-    if (path === '/skills') return 'skills';
-    if (path === '/resume') return 'resume';
-    if (path === '/contact') return 'contact';
-    return 'home';
+    const routes = {
+      '/': 'home',
+      '/about': 'about', 
+      '/projects': 'projects',
+      '/skills': 'skills',
+      '/resume': 'resume',
+      '/contact': 'contact'
+    };
+    return routes[path as keyof typeof routes] || 'home';
   };
 
   const activeSection = getActiveSection();
@@ -62,10 +54,11 @@ const Header: React.FC = () => {
     setExpanded(false);
   };
 
-  const navbarClass = scrolled 
-    ? `py-2 shadow-sm ${isDarkMode ? 'bg-dark' : 'bg-light'}` 
-    : `py-3 ${isDarkMode ? 'bg-dark' : 'bg-light'}`;
+  const handleToggle = (isExpanded: boolean) => {
+    setExpanded(isExpanded);
+  };
 
+  const navbarClass = `py-2 ${scrolled ? 'shadow-sm ' : ''}${isDarkMode ? 'bg-dark' : 'bg-light'}`;
   const textClass = isDarkMode ? 'text-light' : 'text-dark';
 
   return (
@@ -80,7 +73,8 @@ const Header: React.FC = () => {
         className={navbarClass}
         variant={isDarkMode ? 'dark' : 'light'}
         expanded={expanded}
-        onToggle={setExpanded}
+        onToggle={handleToggle}
+        collapseOnSelect
       >
         <Container>
           <Navbar.Brand 
@@ -95,16 +89,17 @@ const Header: React.FC = () => {
           <Navbar.Toggle 
             aria-controls="basic-navbar-nav"
             aria-label="Toggle navigation"
+            className="border-0" // Remove border from toggle
           />
           
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ms-auto align-items-center">
+            <Nav className="ms-auto align-items-lg-center">
               {navItems.map((item) => (
                 <Nav.Link
                   key={item.path}
                   as={Link}
                   to={item.path}
-                  className={`mx-2 fw-medium position-relative ${
+                  className={`mx-lg-2 fw-medium position-relative ${
                     activeSection === item.id 
                       ? 'text-primary-custom' 
                       : textClass
@@ -127,7 +122,7 @@ const Header: React.FC = () => {
                 variant="outline-primary-custom"
                 size="sm"
                 onClick={toggleDarkMode}
-                className="ms-3"
+                className="ms-lg-3 mt-2 mt-lg-0"
                 title={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
               >
                 {isDarkMode ? '☀️' : '🌙'}
@@ -137,21 +132,47 @@ const Header: React.FC = () => {
         </Container>
       </Navbar>
       
-      {/* Backdrop for mobile */}
-      <AnimatePresence>
-        {expanded && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="d-lg-none position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50"
-            style={{ zIndex: 999 }}
-            onClick={() => setExpanded(false)}
-          />
-        )}
-      </AnimatePresence>
-      
-      <div style={{ height: '80px' }} />
+      {/* Spacer for fixed navbar */}
+      <div style={{ height: scrolled ? '70px' : '80px' }} />
+
+      {/* Custom CSS for mobile dropdown */}
+      <style>
+        {`
+          @media (max-width: 991.98px) {
+            .navbar-collapse {
+              position: absolute !important;
+              top: 100% !important;
+              left: 0 !important;
+              right: 0 !important;
+              background-color: ${isDarkMode ? '#212529' : '#ffffff'} !important;
+              border-top: 1px solid ${isDarkMode ? '#343a40' : '#dee2e6'} !important;
+              box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+              z-index: 1000 !important;
+              padding: 1rem 0 !important;
+            }
+            
+            .navbar-nav {
+              text-align: center !important;
+              padding: 0 1rem !important;
+            }
+            
+            .navbar-nav .nav-link {
+              padding: 0.75rem 0 !important;
+              border-bottom: 1px solid ${isDarkMode ? '#343a40' : '#e9ecef'} !important;
+              font-size: 1.1rem !important;
+            }
+            
+            .navbar-nav .nav-link:last-child {
+              border-bottom: none !important;
+            }
+            
+            .navbar-nav .btn {
+              margin-top: 1rem !important;
+              display: inline-block !important;
+            }
+          }
+        `}
+      </style>
     </motion.div>
   );
 };
