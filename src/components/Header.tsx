@@ -1,14 +1,15 @@
-// components/Header.tsx
+// Enhanced Header.tsx with backdrop
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../../context/ThemeContext';
-import { Link, useLocation } from 'react-router-dom'; // ADD THESE IMPORTS
+import { Link, useLocation } from 'react-router-dom';
 
 const Header: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   const { isDarkMode, toggleDarkMode } = useTheme();
-  const location = useLocation(); // ADD THIS
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,7 +21,21 @@ const Header: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Map routes to section IDs for active styling
+  // Close navbar on route change and prevent body scroll
+  useEffect(() => {
+    setExpanded(false);
+    document.body.style.overflow = 'unset';
+  }, [location]);
+
+  // Handle body scroll when navbar is open
+  useEffect(() => {
+    if (expanded) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [expanded]);
+
   const getActiveSection = () => {
     const path = location.pathname;
     if (path === '/') return 'home';
@@ -43,13 +58,15 @@ const Header: React.FC = () => {
     { path: '/contact', label: 'Contact', id: 'contact' }
   ];
 
+  const handleNavLinkClick = () => {
+    setExpanded(false);
+  };
+
   const navbarClass = scrolled 
     ? `py-2 shadow-sm ${isDarkMode ? 'bg-dark' : 'bg-light'}` 
-    : 'py-3 bg-transparent';
+    : `py-3 ${isDarkMode ? 'bg-dark' : 'bg-light'}`;
 
-  const textClass = scrolled 
-    ? (isDarkMode ? 'text-light' : 'text-dark')
-    : (isDarkMode ? 'text-light' : 'text-dark');
+  const textClass = isDarkMode ? 'text-light' : 'text-dark';
 
   return (
     <motion.div
@@ -62,30 +79,37 @@ const Header: React.FC = () => {
         fixed="top" 
         className={navbarClass}
         variant={isDarkMode ? 'dark' : 'light'}
+        expanded={expanded}
+        onToggle={setExpanded}
       >
         <Container>
           <Navbar.Brand 
-            as={Link} // Use React Router Link
+            as={Link}
             to="/" 
             className={`fw-bold ${textClass}`}
+            onClick={handleNavLinkClick}
           >
             Musasa Christopher
           </Navbar.Brand>
           
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Toggle 
+            aria-controls="basic-navbar-nav"
+            aria-label="Toggle navigation"
+          />
           
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto align-items-center">
               {navItems.map((item) => (
                 <Nav.Link
                   key={item.path}
-                  as={Link} // Use React Router Link
+                  as={Link}
                   to={item.path}
                   className={`mx-2 fw-medium position-relative ${
                     activeSection === item.id 
                       ? 'text-primary-custom' 
                       : textClass
                   }`}
+                  onClick={handleNavLinkClick}
                 >
                   {item.label}
                   {activeSection === item.id && (
@@ -99,7 +123,6 @@ const Header: React.FC = () => {
                 </Nav.Link>
               ))}
               
-              {/* Dark Mode Toggle */}
               <Button
                 variant="outline-primary-custom"
                 size="sm"
@@ -113,6 +136,22 @@ const Header: React.FC = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
+      
+      {/* Backdrop for mobile */}
+      <AnimatePresence>
+        {expanded && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="d-lg-none position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50"
+            style={{ zIndex: 999 }}
+            onClick={() => setExpanded(false)}
+          />
+        )}
+      </AnimatePresence>
+      
+      <div style={{ height: '80px' }} />
     </motion.div>
   );
 };
