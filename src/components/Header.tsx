@@ -140,20 +140,34 @@ const Header: React.FC = () => {
         {`
           @media (max-width: 991.98px) {
             .navbar-collapse {
-              position: absolute !important;
+              position: absolute !important; /* Position below the navbar/hamburger */
               top: 100% !important;
-              left: 0 !important;
+              left: auto !important;
               right: 0 !important;
+              width: 200px !important;
               background-color: ${isDarkMode ? '#212529' : '#ffffff'} !important;
               border-top: 1px solid ${isDarkMode ? '#343a40' : '#dee2e6'} !important;
-              box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+              box-shadow: 0 4px 6px ${isDarkMode ? 'rgba(0, 0, 0, 0.1)' : 'rgba(0, 0, 0, 0.1)'} !important; /* Consistent shadow */
               z-index: 1000 !important;
-              padding: 1rem 0 !important;
+              padding: 1rem !important;
+              transform: translateY(0); /* For smooth animation if using transitions */
+              transition: transform 0.3s ease-in-out;
             }
-            
+
+            /* Show/hide with Bootstrap's collapse classes */
+            .navbar-collapse.show {
+              transform: translateY(0);
+            }
+
+            .navbar-collapse.collapsing {
+              transform: translateY(-10px); /* Slight offset during animation */
+            }
+              
             .navbar-nav {
-              text-align: center !important;
-              padding: 0 1rem !important;
+              text-align: left !important; /* Align text to right */
+              justify-content: flex-end !important; /* Justify nav items to the right end */
+              padding: 0 !important; /* Removed excessive padding; adjust if needed */
+              width: 100%;
             }
             
             .navbar-nav .nav-link {

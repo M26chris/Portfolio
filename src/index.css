@@ -135,6 +135,7 @@ mark {
   /* Ensure navbar doesn't obstruct content */
   .navbar-nav {
     text-align: center;
+    /*background-color: whitesmoke;*/
   }
   
   .navbar-nav .nav-link {
